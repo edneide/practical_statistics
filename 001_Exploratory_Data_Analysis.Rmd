@@ -1,21 +1,30 @@
 ---
 title: "Exploratory Data Analysis"
 author: "Edneide Ramalho"
-date: "14/01/2022"
-output: html_document
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+    html_document:
+      highlight: textmate
+      logo: logo.png
+      theme: flatly
+      number_sections: yes
+      toc: yes
+      toc_float:
+        collapsed: yes
+        smooth_scroll: no
 ---
 
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# 1. Data
+# Dados
 
 ```{r}
 state <- read.csv("https://raw.githubusercontent.com/gedeck/practical-statistics-for-data-scientists/master/data/state.csv")
 ```
 
-# 2. Example: Location Estimates of Population and Murder Rates
+# Exemplo: Estimativas locais de taxas populacionais e assassinatos
 
 ```{r}
 mean(state$Population)
@@ -27,11 +36,11 @@ median(state$Population)
 
 -   A média é maior que a média truncada, que é maior do que a mediana.
 
--   \`trim=0.1\` remove 10% de dados de cada ponta, 10% na parte superior, 10% na parte inferior.
+-   `trim=0.1` remove 10% de dados de cada ponta, 10% na parte superior, 10% na parte inferior.
 
 -   Se quisermos usar a taxa média de assassinato para o país, devemos usar a média ponderada ou a mediana para levar em conta as diferentes populações nos estados.
 
-## 2.1. Weighted Mean (Média ponderada)
+## Weighted Mean (Média ponderada)
 
 ```{r}
 library("matrixStats")
@@ -39,4 +48,24 @@ library("matrixStats")
 weighted.mean(state['Murder.Rate'], w = state['Population'])
 
 weighted.mean(state$Murder.Rate, w = state$Population)
+```
+
+# Exemplo: estimativas de variabilidade populacional
+
+-   Desvio padrão:
+
+```{r}
+sd(state$Population)
+```
+
+-   IQR:
+
+```{r}
+IQR(state$Population)
+```
+
+-   MAD:
+
+```{r}
+mad(state$Population)
 ```
